@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>this.state</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="00.normal.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    </head>
+  <body>
+    <div id="app">
+      <!-- my app renders here -->
+    </div>
+    <script src="../react-lib/react.js"></script>
+    <script src="../react-lib/react-dom.js"></script>
+    <script src="../react-lib/babel.js"></script>
+    <script type="text/babel">
+        class TextAreaCounter extends React.Component {
+        constructor() {
+          super();
+          this.state = {};
+          this.onTextChange = this.onTextChange.bind(this);
+        }
+
+        onTextChange(event) {
+          this.setState({
+            text: event.target.value,
+          });
+        }
+
+        render() {
+          const text = 'text' in this.state ? this.state.text : this.props.text;
+          return (
+            <div>
+              <textarea value={text} onChange={this.onTextChange} />
+              <h3>{text.length}</h3>
+            </div>
+          );
+        }
+      }
+      TextAreaCounter.defaultProps = {
+        text: 'Count me as I type',
+      };
+
+
+      const myTextAreaCounter = ReactDOM.createRoot(document.getElementById('app'))
+      .render(<TextAreaCounter text="Bob" />);
+    </script>
+  </body>
+</html>

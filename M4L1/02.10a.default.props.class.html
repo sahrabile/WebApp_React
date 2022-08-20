@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>defaultProps</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="00.normal.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    </head>
+  <body>
+    <div id="app">
+      <!-- my app renders here -->
+    </div>
+    <script src="../react-lib/react.js"></script>
+    <script src="../react-lib/react-dom.js"></script>
+    <script src="../react-lib/babel.js"></script>
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+        render() {
+          return (
+            <span>
+              My name is <em>{this.props.name}</em>, the {this.props.job}
+            </span>
+          );
+        }
+      }
+      //With functions and ES6 classes defaultProps is defined as a property on the component itself:
+      //https://reactjs.org/docs/react-without-es6.html#declaring-default-props
+      MyComponent.defaultProps = {
+        job: 'engineer',
+      };
+
+ 
+      //When have a component, it is very easy to render several of it
+      function SeveralComponents() {
+        return [
+        <p><MyComponent name="Bob" job="software engineer"/></p>,
+        <p><MyComponent name="Alice" job="harware engineer"/></p>
+        ]
+      }
+      ReactDOM.createRoot(document.getElementById('app'))
+        .render(SeveralComponents());
+
+
+
+    </script>
+  </body>
+</html>

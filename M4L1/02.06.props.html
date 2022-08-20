@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>props</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="00.normal.css" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="../favicon_io/site.webmanifest">
+</head>
+
+<body>
+  <div id="app">
+    <!-- my app renders here -->
+  </div>
+  <script src="../react-lib/react.js"></script>
+  <script src="../react-lib/react-dom.js"></script>
+  <script src="../react-lib/babel.js"></script>
+  <script type="text/babel">
+
+    //In a function component the components properties are passed into the component by React as a parameter
+    //https://reactjs.org/docs/components-and-props.html
+    const MyComponent = function (props) {
+      return (
+        <span>
+          My name is <em>{props.name}</em>
+        </span>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('app'))
+      .render(<MyComponent name="Bob" />);
+  </script>
+</body>
+
+</html>

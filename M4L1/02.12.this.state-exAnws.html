@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>this.state</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="00.normal.css" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="../favicon_io/site.webmanifest">
+</head>
+
+<body>
+  <div id="app">
+    <!-- my app renders here -->
+  </div>
+  <script src="../react-lib/react.js"></script>
+  <script src="../react-lib/react-dom.js"></script>
+  <script src="../react-lib/babel.js"></script>
+  <script type="text/babel">
+
+    //Where React really shines (and where old-school browser DOM manipulation and maintenance gets complicated) is when the data
+    //in your application changes. React has the concept of state, which is any data that components want to use to render themselves. 
+    //When state changes, React rebuilds the UI in the DOM without you having to do anything.
+
+    //https://reactjs.org/docs/faq-state.html#gatsby-focus-wrapper
+
+    class TextAreaCounter extends React.Component {
+      constructor() {
+        super();          // remember from js, super() must be called before creating subcall properties
+        this.state = {};  // now I can create an empty object to the state object property. 
+        this.onTextChange = this.onTextChange.bind(this);
+      }
+
+      onTextChange(event) {
+        this.setState({               //need to use setState() to change the state object
+          text: event.target.value,   // the state object has one js object property {text: value};
+        });
+      }
+
+      render() {
+
+        //now I can access the this.state object 
+        const text = 'text' in this.state ? this.state.text : this.props.text;
+        return (
+          <div>
+            <textarea defaultValue={text} onChange={this.onTextChange} />
+            <h3>{text.length}</h3>
+          </div>
+        );
+      }
+    }
+
+    //use a default prop to fall back on 
+    TextAreaCounter.defaultProps = {
+      text: 'Count me as I type',
+    };
+
+
+     //When have a component, it is very easy to render several of it
+     function SeveralComponents() {
+        return [
+        <p><TextAreaCounter text="Bob" /></p>,
+        <p><TextAreaCounter text="Alice" /></p>,
+        <p><TextAreaCounter /></p>
+        ]
+      }
+      ReactDOM.createRoot(document.getElementById('app'))
+        .render(SeveralComponents());
+
+  </script>
+</body>
+
+</html>
+
+<!--Exercise
+  1. Create several text counters on a page
+-->

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lifecycle metods</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="00.normal.css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../favicon_io/site.webmanifest">
+    </head>
+  <body>
+    <div id="app">
+      <!-- my app renders here -->
+    </div>
+    <script src="../react-lib/react.js"></script>
+    <script src="../react-lib/react-dom.js"></script>
+    <script src="../react-lib/babel.js"></script>
+    <script type="text/babel">
+
+      //using class inheritance is straight forward js
+      //LifecycleLoggerComponent is base class
+       class LifecycleLoggerComponent extends React.Component {
+        static getName() {}
+        componentDidMount() {
+          console.log(this.constructor.getName() + '::componentDidMount');
+        }
+        componentWillUnmount() {
+          console.log(this.constructor.getName() + '::componentWillUnmount');
+        }
+        componentDidUpdate(prevProps, prevState, snapshot) {
+          console.log(this.constructor.getName() + '::componentDidUpdate');
+        }
+      }
+
+      //counter is now a derived class, inheriting all properties of LifecycleLoggerComponent class
+      class Counter extends LifecycleLoggerComponent {
+        static getName() {
+          return 'Counter';
+        }
+        render() {
+          return <h3>{this.props.count}</h3>;
+        }
+      }
+      Counter.defaultProps = {
+        count: 0,
+      };
+
+      class TextAreaCounter extends LifecycleLoggerComponent {
+        static getName() {
+          return 'TextAreaCounter';
+        }
+        constructor() {
+          super();
+          this.state = {};
+          this.onTextChange = this.onTextChange.bind(this);
+        }
+
+        onTextChange(event) {
+          this.setState({
+            text: event.target.value,
+          });
+        }
+
+        render() {
+          const text = 'text' in this.state ? this.state.text : this.props.text;
+          return (
+            <div>
+              <textarea value={text} onChange={this.onTextChange} />
+              {text.length > 0 ? <Counter count={text.length} /> : null}
+            </div>
+          );
+        }
+      }
+      TextAreaCounter.defaultProps = {
+        text: 'Count me as I type',
+      };
+
+      const myTextAreaCounter = ReactDOM.render(
+        <TextAreaCounter text="Bob" />,
+        document.getElementById('app'),
+      );
+    </script>
+  </body>
+</html>
